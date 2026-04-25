@@ -143,9 +143,8 @@ body {
   border: 1.5px solid var(--border);
   border-radius: var(--r);
   padding: 1.5rem;
-  position: sticky;
-  top: 1rem;
 }
+
 .physics-box h2 {
   font-family: 'DM Serif Display', serif;
   font-size: 1.2rem;
