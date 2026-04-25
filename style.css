@@ -1,0 +1,400 @@
+/* ============================================================
+   KÖÖGIFÜÜSIKALAB — style.css
+   Esteetika: soe "laboriraamat" — kreemjas paber, soojad toonid,
+   serif pealkirjad, mono numbrid
+   ============================================================ */
+
+:root {
+  --cream:   #faf7f2;
+  --paper:   #f2ede4;
+  --warm:    #e8ddd0;
+  --border:  #cfc3b0;
+  --ink:     #2c2416;
+  --ink2:    #5a4e3c;
+  --ink3:    #8a7d6a;
+  --accent:  #c45c1a;   /* burnt orange */
+  --accent2: #2a7a4b;   /* deep green */
+  --blue:    #1a5c8a;
+  --yellow:  #f5c842;
+  --red:     #d63b2e;
+  --shadow:  rgba(44, 36, 22, 0.12);
+  --r:       8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── HEADER ─────────────────────────────────────────────── */
+.site-header {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 2.5rem 2rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.site-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(255,255,255,0.02) 20px,
+    rgba(255,255,255,0.02) 40px
+  );
+  pointer-events: none;
+}
+.header-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(196,92,26,.15);
+  border: 1px solid rgba(196,92,26,.3);
+  border-radius: 4px;
+  padding: .2rem .6rem;
+  display: inline-block;
+  margin-bottom: .6rem;
+}
+.site-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  color: #fff;
+}
+.site-title em {
+  color: var(--accent);
+  font-style: italic;
+}
+.site-sub {
+  font-size: .9rem;
+  color: var(--ink3);
+  margin-top: .4rem;
+}
+.header-deco {
+  font-size: 2.5rem;
+  display: flex;
+  gap: .5rem;
+  opacity: .35;
+  margin-top: .5rem;
+  flex-shrink: 0;
+}
+
+/* ── TABS ─────────────────────────────────────────────────── */
+.tab-nav {
+  display: flex;
+  background: var(--paper);
+  border-bottom: 2px solid var(--border);
+  padding: 0 1.5rem;
+  gap: .25rem;
+}
+.tab-btn {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: .9rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--ink3);
+  padding: .8rem 1.4rem;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color .2s, border-color .2s;
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.tab-icon { font-size: 1.1rem; }
+
+/* ── CONTENT ─────────────────────────────────────────────── */
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.panel { display: none; }
+.panel.active { display: grid; grid-template-columns: 1fr 1.2fr; gap: 1.75rem; align-items: start; }
+@media (max-width: 680px) {
+  .panel.active { grid-template-columns: 1fr; }
+}
+
+/* ── PHYSICS BOX ─────────────────────────────────────────── */
+.physics-box {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.5rem;
+  position: sticky;
+  top: 1rem;
+}
+.physics-box h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  margin-bottom: .8rem;
+  color: var(--ink);
+}
+.physics-box p { font-size: .88rem; color: var(--ink2); margin-bottom: .75rem; }
+.q10-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.q10-list li {
+  font-size: .83rem;
+  color: var(--ink2);
+  padding-left: 1.1rem;
+  position: relative;
+}
+.q10-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ── TEMP TABLE ──────────────────────────────────────────── */
+.table-label { font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--ink3); margin-bottom: .5rem !important; }
+.temp-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.temp-table th {
+  text-align: left;
+  padding: .3rem .5rem;
+  background: var(--warm);
+  color: var(--ink2);
+  font-family: 'DM Mono', monospace;
+  font-size: .75rem;
+  letter-spacing: .06em;
+}
+.temp-table td { padding: .28rem .5rem; border-bottom: 1px solid var(--warm); color: var(--ink); }
+.temp-table td:first-child { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--accent); }
+.temp-table tr:last-child td { border-bottom: none; }
+
+/* ── CALC CARD ───────────────────────────────────────────── */
+.calc-card {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.75rem;
+  box-shadow: 0 4px 18px var(--shadow);
+}
+.calc-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+  border-bottom: 1px solid var(--warm);
+  padding-bottom: .8rem;
+}
+
+/* ── FORM GRID ───────────────────────────────────────────── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .9rem 1rem;
+  margin-bottom: 1.2rem;
+}
+@media (max-width: 400px) { .form-grid { grid-template-columns: 1fr; } }
+
+.field { display: flex; flex-direction: column; gap: .3rem; }
+.field label {
+  font-size: .78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--ink3);
+}
+.field input, .field select {
+  font-family: 'DM Mono', monospace;
+  font-size: .95rem;
+  padding: .52rem .75rem;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  background: var(--cream);
+  color: var(--ink);
+  transition: border-color .2s, box-shadow .2s;
+  appearance: auto;
+}
+.field input:focus, .field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(196,92,26,.12);
+}
+
+/* ── BUTTON ──────────────────────────────────────────────── */
+.calc-btn {
+  width: 100%;
+  padding: .75rem;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--ink);
+  color: var(--cream);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+  letter-spacing: .02em;
+}
+.calc-btn:hover { background: var(--accent); }
+.calc-btn:active { transform: scale(.98); }
+
+/* ── RESULTS ─────────────────────────────────────────────── */
+.results { margin-top: 1.3rem; }
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .55rem 0;
+  border-bottom: 1px solid var(--warm);
+  gap: .5rem;
+}
+.result-row.highlight { background: rgba(196,92,26,.06); border-radius: 5px; padding: .55rem .6rem; margin: .3rem -.6rem; }
+.result-label { font-size: .82rem; color: var(--ink2); }
+.result-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-align: right;
+}
+
+/* ── PROGRESS BAR ────────────────────────────────────────── */
+.progress-section { margin-top: 1.1rem; }
+.progress-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .07em; color: var(--ink3); margin-bottom: .5rem; font-weight: 600; }
+.progress-track {
+  position: relative;
+  height: 28px;
+  background: var(--warm);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent2) 0%, var(--accent) 100%);
+  border-radius: 14px;
+  transition: width 1.8s cubic-bezier(.4,0,.2,1);
+  position: relative;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 40px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35));
+}
+.progress-pct {
+  position: absolute;
+  right: .7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: .78rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.phase-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: .72rem;
+  color: var(--ink3);
+  margin-top: .35rem;
+}
+
+/* ── EXPLANATION BOX ─────────────────────────────────────── */
+.explanation-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--paper);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r) var(--r) 0;
+  font-size: .83rem;
+  color: var(--ink2);
+  line-height: 1.65;
+}
+.explanation-box strong { color: var(--accent); }
+
+/* ── EGG VISUAL ──────────────────────────────────────────── */
+.egg-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.2rem 0 .5rem;
+  gap: .6rem;
+}
+.egg-shell {
+  width: 80px;
+  height: 96px;
+  background: #fff8ee;
+  border: 2px solid var(--border);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 -6px 12px rgba(0,0,0,.07), 0 4px 12px var(--shadow);
+}
+.egg-white {
+  position: absolute;
+  inset: 6px;
+  background: rgba(255,255,255,.95);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transition: background .6s;
+}
+.egg-yolk {
+  width: 36px;
+  height: 36px;
+  background: var(--yellow);
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  transition: background .6s, filter .6s;
+}
+#eggConsistencyLabel {
+  font-size: .82rem;
+  color: var(--ink3);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.site-footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: .78rem;
+  color: var(--ink3);
+  border-top: 1px solid var(--border);
+  background: var(--paper);
+}
+
+/* ── ANIMATIONS ──────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.results { animation: fadeUp .3s ease both; }

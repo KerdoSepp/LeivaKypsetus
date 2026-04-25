@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leiva & Muna Kalkulaator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="header-badge">Füüsika & Keemia</span>
+      <h1 class="site-title">Köögifüüsika<em>lab</em></h1>
+      <p class="site-sub">Õpi temperatuuri mõju katsete kaudu</p>
+    </div>
+    <div class="header-deco" aria-hidden="true">
+      <span>🌡️</span><span>🍞</span><span>🥚</span>
+    </div>
+  </header>
+
+  <!-- TAB NAV -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="bread" id="tab-bread">
+      <span class="tab-icon">🍞</span> Leiva kalkulaator
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="egg"   id="tab-egg">
+      <span class="tab-icon">🥚</span> Muna kalkulaator
+    </button>
+  </nav>
+
+  <main class="content">
+
+    <!-- ===== LEIVA KALKULAATOR ===== -->
+    <section id="panel-bread" class="panel active" role="tabpanel" aria-labelledby="tab-bread">
+
+      <aside class="physics-box">
+        <h2>Miks pärm käitub nii?</h2>
+        <p>Pärm on elusorganismid. Nagu kõik elusrakud, reageerivad nad soojusele <strong>Q10 reegli</strong> järgi: iga <strong>10 °C temperatuuri tõus</strong> kahekordistab reaktsioonikiirust.</p>
+        <ul class="q10-list">
+          <li>Külmkapis (4 °C) → rakud töötavad <em>~16× aeglasemalt</em> kui toatemperatuuril</li>
+          <li>Optimum ~28–32 °C → kiireim CO₂ teke</li>
+          <li>Üle 50 °C → valgud denatureeruvad, pärm sureb</li>
+        </ul>
+        <div class="temp-table-wrap">
+          <p class="table-label">Hinnanguline kerkimisaeg 500 g tainale (2% pärmi):</p>
+          <table class="temp-table">
+            <thead><tr><th>Temp</th><th>Kerkimisaeg</th><th>Q10 võrdlus</th></tr></thead>
+            <tbody>
+              <tr><td>15 °C</td><td>~150 min</td><td>aeglane (baas)</td></tr>
+              <tr><td>20 °C</td><td>~100 min</td><td>1,5× kiirem</td></tr>
+              <tr><td>25 °C</td><td>~70 min</td><td>2,1× kiirem</td></tr>
+              <tr><td>30 °C</td><td>~45 min</td><td>3,3× kiirem</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </aside>
+
+      <div class="calc-card">
+        <h2 class="calc-title">Leiva kalkulaator</h2>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="flour">Jahu (g)</label>
+            <!-- Tüüpiliselt 400–600 g ühe pätsi jaoks -->
+            <input type="number" id="flour" value="500" min="100" max="2000" />
+          </div>
+          <div class="field">
+            <label for="water">Vesi (g)</label>
+            <!-- Niiskussuhte mõistmine: vesi/jahu × 100% -->
+            <input type="number" id="water" value="325" min="50" max="2000" />
+          </div>
+          <div class="field">
+            <label for="yeast">Pärm (g)</label>
+            <!-- Tüüpiliselt 1–2% jahukaalust -->
+            <input type="number" id="yeast" value="7" min="1" max="100" step="0.5" />
+          </div>
+          <div class="field">
+            <label for="roomTemp">Ruumi temp (°C)</label>
+            <!-- Q10 reegel: iga +10°C → 2× kiirem -->
+            <input type="number" id="roomTemp" value="22" min="5" max="40" />
+          </div>
+          <div class="field">
+            <label for="ovenTemp">Ahju temp (°C)</label>
+            <!-- Maillard reaktsioon algab ~150°C, optimum 200–230°C -->
+            <input type="number" id="ovenTemp" value="220" min="150" max="280" />
+          </div>
+        </div>
+
+        <button class="calc-btn" id="calcBread">Arvuta 🔬</button>
+
+        <div class="results" id="breadResults" hidden>
+          <div class="result-row">
+            <span class="result-label">Niiskussuhe (hydration)</span>
+            <span class="result-value" id="hydration">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Kerkimisaeg</span>
+            <span class="result-value" id="riseTime">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Lõplik maht</span>
+            <span class="result-value" id="finalVolume">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Küpsetusaeg</span>
+            <span class="result-value" id="bakeTime">—</span>
+          </div>
+
+          <!-- Progress bar kerkimisaega visualiseerimiseks -->
+          <div class="progress-section">
+            <p class="progress-label">Kerkimise edenemise simulatsioon:</p>
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+              <span class="progress-pct" id="progressPct">0%</span>
+            </div>
+            <div class="phase-labels">
+              <span>Start</span><span>Pooleli</span><span>Valmis 🎉</span>
+            </div>
+          </div>
+
+          <div class="explanation-box" id="breadExplanation"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MUNA KALKULAATOR ===== -->
+    <section id="panel-egg" class="panel" role="tabpanel" aria-labelledby="tab-egg">
+
+      <aside class="physics-box">
+        <h2>Miks kõrgusel läheb kauem?</h2>
+        <p>Vesi keeb siis, kui selle <strong>auruline rõhk</strong> võrdub ümbritseva õhurõhuga. Mägedes on õhurõhk madalam → vesi keeb <em>madalamal temperatuuril</em>.</p>
+        <ul class="q10-list">
+          <li>Merepinnal: 100 °C</li>
+          <li>1000 m: ~96,7 °C → muna vajab ~10% rohkem aega</li>
+          <li>2500 m: ~92 °C → aeg pikeneb ~25%</li>
+          <li>Muna valgud tahkuvad 62–82 °C vahel — temperatuur mõjutab konsistentsi!</li>
+        </ul>
+      </aside>
+
+      <div class="calc-card">
+        <h2 class="calc-title">Muna kalkulaator</h2>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="eggSize">Muna suurus</label>
+            <!-- S≈42g, M≈52g, L≈62g, XL≈72g -->
+            <select id="eggSize">
+              <option value="S">S (väike, ~42 g)</option>
+              <option value="M" selected>M (keskmine, ~52 g)</option>
+              <option value="L">L (suur, ~62 g)</option>
+              <option value="XL">XL (eriti suur, ~72 g)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="eggStart">Algtemperatuur</label>
+            <!-- Külmast munast soojenemine võtab lisaaega -->
+            <select id="eggStart">
+              <option value="cold">Külmkapist (4 °C)</option>
+              <option value="room" selected>Toatemperatuurist (20 °C)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="altitude">Kõrgus merepinnast (m)</label>
+            <!-- Iga 300m kohta langeb keemispunkt ~1°C -->
+            <input type="number" id="altitude" value="0" min="0" max="5000" step="50" />
+          </div>
+          <div class="field">
+            <label for="consistency">Soovitud konsistents</label>
+            <!-- Valge tahkub ~62°C, kollane ~70°C, täiesti kõva ~82°C -->
+            <select id="consistency">
+              <option value="soft">Pehme (vedel kollane)</option>
+              <option value="medium" selected>Keskmine (poolvedel)</option>
+              <option value="hard">Kõva (täiesti tahke)</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="calc-btn" id="calcEgg">Arvuta 🔬</button>
+
+        <div class="results" id="eggResults" hidden>
+          <div class="result-row">
+            <span class="result-label">Keemistemperatuur teie asukohas</span>
+            <span class="result-value" id="boilTemp">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Keetmisaeg</span>
+            <span class="result-value" id="eggTime">—</span>
+          </div>
+          <div class="result-row highlight">
+            <span class="result-label">Kohandatud keetmisaeg</span>
+            <span class="result-value" id="eggTimeAdj">—</span>
+          </div>
+
+          <div class="egg-visual" id="eggVisual">
+            <div class="egg-shell">
+              <div class="egg-white"></div>
+              <div class="egg-yolk" id="eggYolk"></div>
+            </div>
+            <p id="eggConsistencyLabel"></p>
+          </div>
+
+          <div class="explanation-box" id="eggExplanation"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Füüsika & keemia — praktilised rakendused igapäevaelus</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
